@@ -7,5 +7,44 @@ output:
     self_contained: false
 ---
 
-I'm interested in looking at 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(dplyr)
+
+hev <- read.csv('HEV_article_2018.csv')
+
+hev
+```
+
+Does the average distance traveled by a European affect their choice of car? In this study, I plan to investigate the relationship between typical distances traveled and the type of car driven (gas or electric). I hypothesize that Europeans who travel longer distances are more likely to own electric cars. This could be because Europeans who travel longer distances want the freedom of owning a personal car, but they also want to be environmentally friendly. Or, it could be more cost effective to drive an electric car in Europe as compared to other parts of the world. My explanatory variable is the distance traveled by Europeans which was gathered by surveying Europeans about the distance of their most recent trip. The outcome variable of interest is the type of car they drive. I will code this as 0 = gas car and 1 = electric car. The observed pattern that would provide support for my hypothesis would be that Europeans who drive longer distances are more likely to own an electric vehicle. A pattern that would disprove my hypothesis would be that Europeans become less likely to own an electric vehicle if they travel longer distances. A positive correlation between distance traveled and owning an electric car would provide support for my hypothesis.
+
+```{r}
+age_plot <- hev |>
+  mutate(
+  age_group = case_when (
+    Age <= 25 ~ "25 and under",
+    Age >= 26 & Age <= 30 ~ "26 - 30",
+     Age >= 31 & Age <= 35 ~ "31 - 35",
+     Age >= 36 & Age <= 40 ~ "36 - 40",
+     Age >= 41 & Age <= 45 ~ "41 - 45",
+     Age >= 46 & Age <= 50 ~ "46 - 50",
+     Age >= 51 & Age <= 55 ~ "51 - 55",
+     Age >= 56 & Age <= 60 ~ "56 - 60",
+     Age >= 61 & Age <= 65 ~ "61 - 65",
+     Age >= 65 & Age <= 70 ~ "65 - 70",
+     Age >= 71 ~ "over 70"),
+  electric_car = if_else(buy_electric == "1", "Own electric", "Do not own electric"),
+  count = n()
+  ) |>
+  ggplot(mapping = aes(x = count,
+                       y = age_group)) +
+  geom_col(mapping = aes(fill = buy_electric))+
+  scale_fill_manual(values = c(1 = "red",
+                               0 = "blue"))
+
+age_plot
+
+```
+
 
