@@ -55,11 +55,19 @@ age_plot
 ```
 
 ```{r}
-hev |>
+plot<- hev |>
   filter(Employment_status == "1") |>
-  group_by(Education_level)
+  mutate(college = case_when(
+    Education_level <= 3 ~ "No college",
+    Education_level == 4 ~ "College")) |>
+  group_by(college) |>
+  summarize(mean_buy_electric = mean(buy_electric)) |>
+  pivot_wider(names_from = college,
+              values_from = mean_buy_electric) |>
+  mutate(ATE = `College` - `No college`)
+  
 
-
+plot
 
 ```
 
