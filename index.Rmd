@@ -18,7 +18,7 @@ hev <- read_csv('HEV_article_2018.csv')
 hev
 ```
 
-Does the average distance traveled by a European affect their choice of car? In this study, I plan to investigate the relationship between typical distances traveled and the type of car driven (gas or electric). I hypothesize that Europeans who travel longer distances are more likely to own electric cars. This could be because Europeans who travel longer distances want the freedom of owning a personal car, but they also want to be environmentally friendly. Or, it could be more cost effective to drive an electric car in Europe as compared to other parts of the world. My explanatory variable is the distance traveled by Europeans which was gathered by surveying Europeans about the distance of their most recent trip. The outcome variable of interest is the type of car they drive. I will code this as 0 = gas car and 1 = electric car. The observed pattern that would provide support for my hypothesis would be that Europeans who drive longer distances are more likely to own an electric vehicle. A pattern that would disprove my hypothesis would be that Europeans become less likely to own an electric vehicle if they travel longer distances. A positive correlation between distance traveled and owning an electric car would provide support for my hypothesis.
+
 
 ```{r}
 age_vars <- hev |>
@@ -53,9 +53,45 @@ age_plot <- ggplot(data = age_vars,
 age_plot
 
 ```
+```{r}
+age_ate <- hev |>
+  mutate(age_two_groups = case_when(
+    Age <= 40 ~ "40 and under",
+    Age >= 41 ~ "41 and over")) |>
+  group_by(age_two_groups) |>
+  summarize(mean_buy_electric = mean(buy_electric)) |>
+  pivot_wider(names_from = age_two_groups,
+              values_from = mean_buy_electric) |>
+  mutate(ATE = `40 and under` - `41 and over`) |>
+  summarize(ATE)
+
+knitr::kable(age_ate)
+```
 
 ```{r}
-plot<- hev |>
+college_vars <- hev |>
+   mutate(college = case_when(
+    Education_level <= 3 ~ "No college",
+    Education_level == 4 ~ "College"),
+    electric_car = if_else(buy_electric == "1", "Own electric", "Do not own electric"))|>
+  group_by(college, electric_car) |>
+  summarize(count = n())
+
+college_plot <- ggplot(data = college_vars,
+                   mapping = aes(x = college,
+                       y = count,
+                       fill = electric_car)) +
+  geom_col(position = "dodge")+
+  scale_fill_manual(values = c("Own electric" = "red",
+                               "Do not own electric" = "blue"))
+
+college_plot
+
+```
+
+
+```{r}
+college_ate <- hev |>
   filter(Employment_status == "1") |>
   mutate(college = case_when(
     Education_level <= 3 ~ "No college",
@@ -64,14 +100,14 @@ plot<- hev |>
   summarize(mean_buy_electric = mean(buy_electric)) |>
   pivot_wider(names_from = college,
               values_from = mean_buy_electric) |>
-  mutate(ATE = `College` - `No college`)
+  mutate(ATE = `College` - `No college`) |>
+  summarize(ATE)
   
 
-plot
-
+knitr::kable(college_ate)
 ```
 
-
+filtered employment status^^^
 
 
 
