@@ -18,10 +18,18 @@ hev <- read_csv('HEV_article_2018.csv')
 hev
 ```
 
+```{r}
+hev2 <- hev |>
+  drop_na() |>
+  mutate(electric_car = if_else(buy_electric == "1", "Own electric", "Do not own electric"),
+         college = case_when(
+    Education_level <= 3 ~ "No college",
+    Education_level == 4 ~ "College"))
 
+```
 
 ```{r}
-age_vars <- hev |>
+age_vars <- hev2 |>
   mutate(
   age_group = case_when (
     Age <= 25 ~ "25 and under",
@@ -53,8 +61,10 @@ age_plot <- ggplot(data = age_vars,
 age_plot
 
 ```
+
+
 ```{r}
-age_ate <- hev |>
+age_ate <- hev2 |>
   mutate(age_two_groups = case_when(
     Age <= 40 ~ "40 and under",
     Age >= 41 ~ "41 and over")) |>
@@ -69,7 +79,7 @@ knitr::kable(age_ate)
 ```
 
 ```{r}
-college_vars <- hev |>
+college_vars <- hev2 |>
    mutate(college = case_when(
     Education_level <= 3 ~ "No college",
     Education_level == 4 ~ "College"),
@@ -91,7 +101,7 @@ college_plot
 
 
 ```{r}
-college_ate <- hev |>
+college_ate <- hev2 |>
   filter(Employment_status == "1") |>
   mutate(college = case_when(
     Education_level <= 3 ~ "No college",
@@ -108,6 +118,46 @@ knitr::kable(college_ate)
 ```
 
 filtered employment status^^^
+
+```{r}
+hev2 <- hev2 |>
+  mutate(college_num = case_when(
+    Education_level == 3 ~ "0",
+    Education_level == 4 ~ "1"
+  ))
+
+```
+
+```{r}
+
+lm_hev_ed <- lm(buy_electric ~ college_num, data = hev2)
+
+
+modelsummary::modelsummary(lm_hev_ed,
+                           statistic = c("s.e. = {std.error}",
+                                         "p = {p.value}"),
+                           gof_map = c("nobs", "r.squared", "adj.r.squared"))
+
+```
+
+
+
+
+```{r}
+## copied from final exam
+
+lm_hev <- lm(buy_electric ~ Age + college_num + Income_group, data = hev2)
+
+
+modelsummary::modelsummary(lm_hev,
+                           statistic = c("s.e. = {std.error}",
+                                         "p = {p.value}"),
+                           gof_map = c("nobs", "r.squared", "adj.r.squared"))
+
+
+```
+
+income group, 1 = high income, 5 = low income
 
 
 
