@@ -19,7 +19,7 @@ hev
 ```
 Do demographic factors affect the car choice of Europeans? In this study, I plan to investigate the relationship between certain demographic factors (age, education, income) and the type of car drive (gas or electric). I hypothesize that younger college educated Europeans are more likely to own electric vehicles. These younger Europeans might care more about environmental impact and be equipped with the knowledge to make decisions about their environmental impact more so than an older less educated generation. My explanatory variables are age, education, and income. The data I will use was collected through a survey in Europe. The outcome variable of interest is the type of car they drive. I will code this as 0 = gas car and 1 = electric car. The observed pattern that would provide support for my hypothesis would be that Europeans who are younger and more educated  are more likely to own an electric vehicle. A pattern that would disprove my hypothesis would be that Europeans become less likely to own an electric vehicle as age increases and/or level of education decreases. A negative correlation between age and owning an electric car as well as a positive relationship between increased education and owning an electric car would provide support for my hypothesis.
 
-```{r}
+```{r, echo = FALSE}
 hev2 <- hev |>
   drop_na() |>
   mutate(electric_car = if_else(buy_electric == "1", "Own electric", "Do not own electric"),
@@ -29,7 +29,7 @@ hev2 <- hev |>
 
 ```
 
-```{r}
+```{r, echo = FALSE}
 age_vars <- hev2 |>
   mutate(
   age_group = case_when (
@@ -66,7 +66,7 @@ age_plot
 
 ```
 
-```{r}
+```{r, echo = FALSE}
 college_vars <- hev2 |>
    mutate(college = case_when(
     Education_level <= 3 ~ "No college",
@@ -91,7 +91,7 @@ college_plot
 ```
 
 
-```{r}
+```{r, echo = FALSE}
 college_ate <- hev2 |>
   filter(Employment_status == "1") |>
   mutate(college = case_when(
@@ -112,7 +112,7 @@ knitr::kable(college_ate)
   The second plot shows the education level of respondents and the car owned. We can observe that most respondents do not have college educations. There are roughly the same number of respondents that own electric vehicles in each education category, but there are more non-college graduates that own non-electric vehicles than college graduates that own non-electric vehicles. The average treatment effect calculated above is 0.0667522. This means that college graduates in this survey are roughly 6.7% more likely to own electric vehicles than non-college graduates. Or, if there are two groups of 100 respondents from each education group, we would expect about 6 more college graduates to own electric vehicles than non-college graduates. 
 
 
-```{r}
+```{r, echo = FALSE}
 hev2 <- hev2 |>
   mutate(college_num = case_when(
     Education_level == 3 ~ "0",
@@ -121,7 +121,7 @@ hev2 <- hev2 |>
 
 ```
 
-```{r}
+```{r, echo = FALSE}
 
 lm_hev_ed <- lm(buy_electric ~ college_num, data = hev2)
 
@@ -133,10 +133,10 @@ modelsummary::modelsummary(lm_hev_ed,
 
 ```
 
-The regression calculated for the correlation between education level and type of car owned gives a slightly different result than the average treatment effect calculated above. The correlation coefficient in this regression is 0.062 and the intercept is 0.381. This means that 38.1% of the respondents without a college degree own electric vehicles. The correlation coefficient predicts that 44.3% of the respondents with college degrees own electric vehicles. The p-value associated with the calculated coefficient is  p = <0.001, so we can reject the null hypothesis that education level does not affect the type of car owned by respondents.
+  The regression calculated for the correlation between education level and type of car owned gives a slightly different result than the average treatment effect calculated above. The correlation coefficient in this regression is 0.062 and the intercept is 0.381. This means that 38.1% of the respondents without a college degree own electric vehicles. The correlation coefficient predicts that 44.3% of the respondents with college degrees own electric vehicles. The p-value associated with the calculated coefficient is  p = <0.001, so we can reject the null hypothesis that education level does not affect the type of car owned by respondents.
 
 
-```{r}
+```{r, echo = FALSE}
 
 lm_hev <- lm(buy_electric ~ Age + college_num + Income_group, data = hev2)
 
@@ -151,8 +151,3 @@ modelsummary::modelsummary(lm_hev,
   The multiple regression above calculates a coefficient for age of 0.0006 with a p-value of 0.075. This coefficient is not statistically significant and only shows a slight increase in the predicted ownership of electric vehicles in older respondents, controlling for education and income. The coefficient calculated for the college variable is 0.057 and statistically significant with a p-value of <0.001. We can reject the null hypothesis that education does not affect the type of car owned by respondents. This regression predicts that respondents with college educations are 5.7% more likely to own electric vehicles than those without college educations, controlling for age and income level.
   The income variable is difficult to interpret in this data because respondents self-reported their income level. This data is calculated as “1 - high, 2 - higher middle, 3 - middle, 4 - lower middle, 5 - low, or 6 - I prefer not to answer.” The calculated coefficient of −0.025 actually shows a positive relationship between income and electric car ownership, and the p-value of <0.001 is statistically significant. There were 480 respondents that responded with 6 - “I prefer not to answer” to the question about income group, which makes this coefficient more difficult to interpret. Also, the way the income variable is calculated makes the intercept difficult to interpret. If the income variable was reported as income in a certain currency, the intercept would tell us the prediction for car ownership of a 0-year-old non-college graduate with no income. However, the calculated intercept has little meaning with the income variable reported as it is.
   This study has demonstrated the factors that affect Europeans’ choice of car. The education and income variables are statistically significant to reject the null hypothesis that they do not affect car choice. Both of these variables can be used to predict the car ownership of survey respondents. One potential limitation of the study is that income groups are self-reported. There is no numerical value of income reported, rather respondents self-report the income category they fall into without being given income distributions to define those categories. Only allowing respondents to report values of income in currency would allow for a more robust understanding of the effect of income on car choice. In the future, this study could be improved by better defining the income variable and including hybrid cars instead of limiting the responses to electric and non-electric vehicles. 
-
-
-
-
-
