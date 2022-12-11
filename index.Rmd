@@ -1,12 +1,11 @@
 ---
 title: "Gov 50 Final Project"
 author: "Molly Hamlin"
-description: "My final project"
+description: "Europeans' Choice of Car"
 output:
   distill::distill_article:
     self_contained: false
 ---
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
