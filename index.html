@@ -115,7 +115,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["HEV_article_2018.csv","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-1-1.png","index_files/figure-html5/unnamed-chunk-2-1.png","index_files/figure-html5/unnamed-chunk-3-1.png","index_files/header-attrs-2.15/header-attrs.js","index_files/header-attrs-2.17/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["HEV_article_2018.csv","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-1-1.png","index_files/figure-html5/unnamed-chunk-2-1.png","index_files/figure-html5/unnamed-chunk-3-1.png","index_files/header-attrs-2.15/header-attrs.js","index_files/header-attrs-2.17/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/kePrint-0.0.1/kePrint.js","index_files/lightable-0.0.1/lightable.css","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1524,28 +1524,6 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<pre><code># A tibble: 18 × 3
-# Groups:   age_group [9]
-   age_group    electric_car        count
-   &lt;chr&gt;        &lt;chr&gt;               &lt;int&gt;
- 1 25 and under Do not own electric  1230
- 2 25 and under Own electric          748
- 3 26 - 30      Do not own electric  1569
- 4 26 - 30      Own electric         1075
- 5 31 - 35      Do not own electric  1156
- 6 31 - 35      Own electric          816
- 7 36 - 40      Do not own electric  1365
- 8 36 - 40      Own electric          974
- 9 41 - 45      Do not own electric  1509
-10 41 - 45      Own electric         1035
-11 46 - 50      Do not own electric  1496
-12 46 - 50      Own electric          979
-13 51 - 55      Do not own electric   923
-14 51 - 55      Own electric          647
-15 56 - 60      Do not own electric   808
-16 56 - 60      Own electric          542
-17 61 - 65      Do not own electric   602
-18 61 - 65      Own electric          396</code></pre>
 <p><img src="index_files/figure-html5/unnamed-chunk-2-1.png" width="624" /></p>
 </div>
 <div class="layout-chunk" data-layout="l-body">
@@ -1784,7 +1762,7 @@ R2 Adj.
 <p>The multiple regression above calculates a coefficient for age of 0.0006 with a p-value of 0.075. This coefficient is not statistically significant and only shows a slight increase in the predicted ownership of electric vehicles in older respondents, controlling for education and income. The coefficient calculated for the college variable is 0.057 and statistically significant with a p-value of &lt;0.001. We can reject the null hypothesis that education does not affect the type of car owned by respondents. This regression predicts that respondents with college educations are 5.7% more likely to own electric vehicles than those without college educations, controlling for age and income level.
 The income variable is difficult to interpret in this data because respondents self-reported their income level. This data is calculated as “1 - high, 2 - higher middle, 3 - middle, 4 - lower middle, 5 - low, or 6 - I prefer not to answer.” The calculated coefficient of −0.025 actually shows a positive relationship between income and electric car ownership, and the p-value of &lt;0.001 is statistically significant. There were 480 respondents that responded with 6 - “I prefer not to answer” to the question about income group, which makes this coefficient more difficult to interpret. Also, the way the income variable is calculated makes the intercept difficult to interpret. If the income variable was reported as income in a certain currency, the intercept would tell us the prediction for car ownership of a 0-year-old non-college graduate with no income. However, the calculated intercept has little meaning with the income variable reported as it is.
 This study has demonstrated the factors that affect Europeans’ choice of car. The education and income variables are statistically significant to reject the null hypothesis that they do not affect car choice. Both of these variables can be used to predict the car ownership of survey respondents. One potential limitation of the study is that income groups are self-reported. There is no numerical value of income reported, rather respondents self-report the income category they fall into without being given income distributions to define those categories. Only allowing respondents to report values of income in currency would allow for a more robust understanding of the effect of income on car choice. In the future, this study could be improved by better defining the income variable and including hybrid cars instead of limiting the responses to electric and non-electric vehicles.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

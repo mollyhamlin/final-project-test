@@ -14,7 +14,6 @@ library(infer)
 
 hev <- read_csv('HEV_article_2018.csv')
 
-hev
 ```
 Do demographic factors affect the car choice of Europeans? In this study, I plan to investigate the relationship between certain demographic factors (age, education, income) and the type of car drive (gas or electric). I hypothesize that younger college educated Europeans are more likely to own electric vehicles. These younger Europeans might care more about environmental impact and be equipped with the knowledge to make decisions about their environmental impact more so than an older less educated generation. My explanatory variables are age, education, and income. The data I will use was collected through a survey in Europe. The outcome variable of interest is the type of car they drive. I will code this as 0 = gas car and 1 = electric car. The observed pattern that would provide support for my hypothesis would be that Europeans who are younger and more educated  are more likely to own an electric vehicle. A pattern that would disprove my hypothesis would be that Europeans become less likely to own an electric vehicle as age increases and/or level of education decreases. A negative correlation between age and owning an electric car as well as a positive relationship between increased education and owning an electric car would provide support for my hypothesis.
 
@@ -47,8 +46,6 @@ age_vars <- hev2 |>
   ) |>
   group_by(age_group, electric_car) |>
   summarize(count = n())
-
-age_vars
 
 age_plot <- ggplot(data = age_vars,
                    mapping = aes(x = count,
